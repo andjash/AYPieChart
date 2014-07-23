@@ -1,0 +1,542 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		CCBC5B43197FB51F0033126D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCBC5B42197FB51F0033126D /* Foundation.framework */; };
+		CCBC5B45197FB51F0033126D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCBC5B44197FB51F0033126D /* CoreGraphics.framework */; };
+		CCBC5B47197FB51F0033126D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCBC5B46197FB51F0033126D /* UIKit.framework */; };
+		CCBC5B4D197FB51F0033126D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CCBC5B4B197FB51F0033126D /* InfoPlist.strings */; };
+		CCBC5B4F197FB51F0033126D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CCBC5B4E197FB51F0033126D /* main.m */; };
+		CCBC5B53197FB51F0033126D /* AYAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CCBC5B52197FB51F0033126D /* AYAppDelegate.m */; };
+		CCBC5B59197FB51F0033126D /* AYViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CCBC5B58197FB51F0033126D /* AYViewController.m */; };
+		CCBC5B5B197FB51F0033126D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CCBC5B5A197FB51F0033126D /* Images.xcassets */; };
+		CCBC5B62197FB5200033126D /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCBC5B61197FB5200033126D /* XCTest.framework */; };
+		CCBC5B63197FB5200033126D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCBC5B42197FB51F0033126D /* Foundation.framework */; };
+		CCBC5B64197FB5200033126D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCBC5B46197FB51F0033126D /* UIKit.framework */; };
+		CCBC5B6C197FB5200033126D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CCBC5B6A197FB5200033126D /* InfoPlist.strings */; };
+		CCBC5B6E197FB5200033126D /* AYPieChartDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CCBC5B6D197FB5200033126D /* AYPieChartDemoTests.m */; };
+		CCBC5B78197FB61D0033126D /* AYViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CCBC5B77197FB61D0033126D /* AYViewController.xib */; };
+		CCBC5B97197FB96C0033126D /* AYPieChartEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = CCBC5B92197FB96C0033126D /* AYPieChartEntry.m */; };
+		CCBC5B98197FB96C0033126D /* AYPieChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = CCBC5B94197FB96C0033126D /* AYPieChartView.m */; };
+		CCBC5B99197FB96C0033126D /* AYRotationGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = CCBC5B96197FB96C0033126D /* AYRotationGestureRecognizer.m */; };
+		CCBC5BA2197FBB3D0033126D /* AYPieChartEntryDetailsView.m in Sources */ = {isa = PBXBuildFile; fileRef = CCBC5BA0197FBB3D0033126D /* AYPieChartEntryDetailsView.m */; };
+		CCBC5BA3197FBB3D0033126D /* AYPieChartEntryDetailsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CCBC5BA1197FBB3D0033126D /* AYPieChartEntryDetailsView.xib */; };
+		CCBC5BA7197FBEDF0033126D /* pizza.png in Resources */ = {isa = PBXBuildFile; fileRef = CCBC5BA5197FBEDF0033126D /* pizza.png */; };
+		CCBC5BA8197FBEDF0033126D /* pizza@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CCBC5BA6197FBEDF0033126D /* pizza@2x.png */; };
+		CCBC5BAD197FC0D90033126D /* beer.png in Resources */ = {isa = PBXBuildFile; fileRef = CCBC5BA9197FC0D90033126D /* beer.png */; };
+		CCBC5BAE197FC0D90033126D /* beer@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CCBC5BAA197FC0D90033126D /* beer@2x.png */; };
+		CCBC5BAF197FC0D90033126D /* fry.png in Resources */ = {isa = PBXBuildFile; fileRef = CCBC5BAB197FC0D90033126D /* fry.png */; };
+		CCBC5BB0197FC0D90033126D /* fry@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CCBC5BAC197FC0D90033126D /* fry@2x.png */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		CCBC5B65197FB5200033126D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CCBC5B37197FB51F0033126D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CCBC5B3E197FB51F0033126D;
+			remoteInfo = AYPieChartDemo;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		CCBC5B3F197FB51F0033126D /* AYPieChartDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AYPieChartDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CCBC5B42197FB51F0033126D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		CCBC5B44197FB51F0033126D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		CCBC5B46197FB51F0033126D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		CCBC5B4A197FB51F0033126D /* AYPieChartDemo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AYPieChartDemo-Info.plist"; sourceTree = "<group>"; };
+		CCBC5B4C197FB51F0033126D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CCBC5B4E197FB51F0033126D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		CCBC5B50197FB51F0033126D /* AYPieChartDemo-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AYPieChartDemo-Prefix.pch"; sourceTree = "<group>"; };
+		CCBC5B51197FB51F0033126D /* AYAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AYAppDelegate.h; sourceTree = "<group>"; };
+		CCBC5B52197FB51F0033126D /* AYAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AYAppDelegate.m; sourceTree = "<group>"; };
+		CCBC5B57197FB51F0033126D /* AYViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AYViewController.h; sourceTree = "<group>"; };
+		CCBC5B58197FB51F0033126D /* AYViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AYViewController.m; sourceTree = "<group>"; };
+		CCBC5B5A197FB51F0033126D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		CCBC5B60197FB5200033126D /* AYPieChartDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AYPieChartDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CCBC5B61197FB5200033126D /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		CCBC5B69197FB5200033126D /* AYPieChartDemoTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AYPieChartDemoTests-Info.plist"; sourceTree = "<group>"; };
+		CCBC5B6B197FB5200033126D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CCBC5B6D197FB5200033126D /* AYPieChartDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AYPieChartDemoTests.m; sourceTree = "<group>"; };
+		CCBC5B77197FB61D0033126D /* AYViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AYViewController.xib; sourceTree = "<group>"; };
+		CCBC5B90197FB96C0033126D /* AYCompressibleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AYCompressibleView.h; sourceTree = "<group>"; };
+		CCBC5B91197FB96C0033126D /* AYPieChartEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AYPieChartEntry.h; sourceTree = "<group>"; };
+		CCBC5B92197FB96C0033126D /* AYPieChartEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AYPieChartEntry.m; sourceTree = "<group>"; };
+		CCBC5B93197FB96C0033126D /* AYPieChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AYPieChartView.h; sourceTree = "<group>"; };
+		CCBC5B94197FB96C0033126D /* AYPieChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AYPieChartView.m; sourceTree = "<group>"; };
+		CCBC5B95197FB96C0033126D /* AYRotationGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AYRotationGestureRecognizer.h; sourceTree = "<group>"; };
+		CCBC5B96197FB96C0033126D /* AYRotationGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AYRotationGestureRecognizer.m; sourceTree = "<group>"; };
+		CCBC5B9F197FBB3D0033126D /* AYPieChartEntryDetailsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AYPieChartEntryDetailsView.h; sourceTree = "<group>"; };
+		CCBC5BA0197FBB3D0033126D /* AYPieChartEntryDetailsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AYPieChartEntryDetailsView.m; sourceTree = "<group>"; };
+		CCBC5BA1197FBB3D0033126D /* AYPieChartEntryDetailsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AYPieChartEntryDetailsView.xib; sourceTree = "<group>"; };
+		CCBC5BA5197FBEDF0033126D /* pizza.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pizza.png; sourceTree = "<group>"; };
+		CCBC5BA6197FBEDF0033126D /* pizza@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pizza@2x.png"; sourceTree = "<group>"; };
+		CCBC5BA9197FC0D90033126D /* beer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = beer.png; sourceTree = "<group>"; };
+		CCBC5BAA197FC0D90033126D /* beer@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "beer@2x.png"; sourceTree = "<group>"; };
+		CCBC5BAB197FC0D90033126D /* fry.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fry.png; sourceTree = "<group>"; };
+		CCBC5BAC197FC0D90033126D /* fry@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fry@2x.png"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		CCBC5B3C197FB51F0033126D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CCBC5B45197FB51F0033126D /* CoreGraphics.framework in Frameworks */,
+				CCBC5B47197FB51F0033126D /* UIKit.framework in Frameworks */,
+				CCBC5B43197FB51F0033126D /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CCBC5B5D197FB51F0033126D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CCBC5B62197FB5200033126D /* XCTest.framework in Frameworks */,
+				CCBC5B64197FB5200033126D /* UIKit.framework in Frameworks */,
+				CCBC5B63197FB5200033126D /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		CCBC5B36197FB51F0033126D = {
+			isa = PBXGroup;
+			children = (
+				CCBC5BA4197FBEDF0033126D /* Assets */,
+				CCBC5B8F197FB96C0033126D /* AYPieChart */,
+				CCBC5B48197FB51F0033126D /* AYPieChartDemo */,
+				CCBC5B67197FB5200033126D /* AYPieChartDemoTests */,
+				CCBC5B41197FB51F0033126D /* Frameworks */,
+				CCBC5B40197FB51F0033126D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		CCBC5B40197FB51F0033126D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CCBC5B3F197FB51F0033126D /* AYPieChartDemo.app */,
+				CCBC5B60197FB5200033126D /* AYPieChartDemoTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CCBC5B41197FB51F0033126D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CCBC5B42197FB51F0033126D /* Foundation.framework */,
+				CCBC5B44197FB51F0033126D /* CoreGraphics.framework */,
+				CCBC5B46197FB51F0033126D /* UIKit.framework */,
+				CCBC5B61197FB5200033126D /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CCBC5B48197FB51F0033126D /* AYPieChartDemo */ = {
+			isa = PBXGroup;
+			children = (
+				CCBC5B9F197FBB3D0033126D /* AYPieChartEntryDetailsView.h */,
+				CCBC5BA0197FBB3D0033126D /* AYPieChartEntryDetailsView.m */,
+				CCBC5BA1197FBB3D0033126D /* AYPieChartEntryDetailsView.xib */,
+				CCBC5B51197FB51F0033126D /* AYAppDelegate.h */,
+				CCBC5B52197FB51F0033126D /* AYAppDelegate.m */,
+				CCBC5B57197FB51F0033126D /* AYViewController.h */,
+				CCBC5B58197FB51F0033126D /* AYViewController.m */,
+				CCBC5B77197FB61D0033126D /* AYViewController.xib */,
+				CCBC5B5A197FB51F0033126D /* Images.xcassets */,
+				CCBC5B49197FB51F0033126D /* Supporting Files */,
+			);
+			path = AYPieChartDemo;
+			sourceTree = "<group>";
+		};
+		CCBC5B49197FB51F0033126D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				CCBC5B4A197FB51F0033126D /* AYPieChartDemo-Info.plist */,
+				CCBC5B4B197FB51F0033126D /* InfoPlist.strings */,
+				CCBC5B4E197FB51F0033126D /* main.m */,
+				CCBC5B50197FB51F0033126D /* AYPieChartDemo-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		CCBC5B67197FB5200033126D /* AYPieChartDemoTests */ = {
+			isa = PBXGroup;
+			children = (
+				CCBC5B6D197FB5200033126D /* AYPieChartDemoTests.m */,
+				CCBC5B68197FB5200033126D /* Supporting Files */,
+			);
+			path = AYPieChartDemoTests;
+			sourceTree = "<group>";
+		};
+		CCBC5B68197FB5200033126D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				CCBC5B69197FB5200033126D /* AYPieChartDemoTests-Info.plist */,
+				CCBC5B6A197FB5200033126D /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		CCBC5B8F197FB96C0033126D /* AYPieChart */ = {
+			isa = PBXGroup;
+			children = (
+				CCBC5B90197FB96C0033126D /* AYCompressibleView.h */,
+				CCBC5B91197FB96C0033126D /* AYPieChartEntry.h */,
+				CCBC5B92197FB96C0033126D /* AYPieChartEntry.m */,
+				CCBC5B93197FB96C0033126D /* AYPieChartView.h */,
+				CCBC5B94197FB96C0033126D /* AYPieChartView.m */,
+				CCBC5B95197FB96C0033126D /* AYRotationGestureRecognizer.h */,
+				CCBC5B96197FB96C0033126D /* AYRotationGestureRecognizer.m */,
+			);
+			name = AYPieChart;
+			path = ../AYPieChart;
+			sourceTree = "<group>";
+		};
+		CCBC5BA4197FBEDF0033126D /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				CCBC5BA9197FC0D90033126D /* beer.png */,
+				CCBC5BAA197FC0D90033126D /* beer@2x.png */,
+				CCBC5BAB197FC0D90033126D /* fry.png */,
+				CCBC5BAC197FC0D90033126D /* fry@2x.png */,
+				CCBC5BA5197FBEDF0033126D /* pizza.png */,
+				CCBC5BA6197FBEDF0033126D /* pizza@2x.png */,
+			);
+			name = Assets;
+			path = AYPieChartDemo/Assets;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		CCBC5B3E197FB51F0033126D /* AYPieChartDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CCBC5B71197FB5200033126D /* Build configuration list for PBXNativeTarget "AYPieChartDemo" */;
+			buildPhases = (
+				CCBC5B3B197FB51F0033126D /* Sources */,
+				CCBC5B3C197FB51F0033126D /* Frameworks */,
+				CCBC5B3D197FB51F0033126D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AYPieChartDemo;
+			productName = AYPieChartDemo;
+			productReference = CCBC5B3F197FB51F0033126D /* AYPieChartDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+		CCBC5B5F197FB51F0033126D /* AYPieChartDemoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CCBC5B74197FB5200033126D /* Build configuration list for PBXNativeTarget "AYPieChartDemoTests" */;
+			buildPhases = (
+				CCBC5B5C197FB51F0033126D /* Sources */,
+				CCBC5B5D197FB51F0033126D /* Frameworks */,
+				CCBC5B5E197FB51F0033126D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CCBC5B66197FB5200033126D /* PBXTargetDependency */,
+			);
+			name = AYPieChartDemoTests;
+			productName = AYPieChartDemoTests;
+			productReference = CCBC5B60197FB5200033126D /* AYPieChartDemoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		CCBC5B37197FB51F0033126D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = AY;
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = "Andrey Yashnev";
+				TargetAttributes = {
+					CCBC5B5F197FB51F0033126D = {
+						TestTargetID = CCBC5B3E197FB51F0033126D;
+					};
+				};
+			};
+			buildConfigurationList = CCBC5B3A197FB51F0033126D /* Build configuration list for PBXProject "AYPieChartDemo" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = CCBC5B36197FB51F0033126D;
+			productRefGroup = CCBC5B40197FB51F0033126D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				CCBC5B3E197FB51F0033126D /* AYPieChartDemo */,
+				CCBC5B5F197FB51F0033126D /* AYPieChartDemoTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		CCBC5B3D197FB51F0033126D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CCBC5BAF197FC0D90033126D /* fry.png in Resources */,
+				CCBC5BA7197FBEDF0033126D /* pizza.png in Resources */,
+				CCBC5BA3197FBB3D0033126D /* AYPieChartEntryDetailsView.xib in Resources */,
+				CCBC5B5B197FB51F0033126D /* Images.xcassets in Resources */,
+				CCBC5BB0197FC0D90033126D /* fry@2x.png in Resources */,
+				CCBC5BAD197FC0D90033126D /* beer.png in Resources */,
+				CCBC5BA8197FBEDF0033126D /* pizza@2x.png in Resources */,
+				CCBC5B4D197FB51F0033126D /* InfoPlist.strings in Resources */,
+				CCBC5BAE197FC0D90033126D /* beer@2x.png in Resources */,
+				CCBC5B78197FB61D0033126D /* AYViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CCBC5B5E197FB51F0033126D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CCBC5B6C197FB5200033126D /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		CCBC5B3B197FB51F0033126D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CCBC5B98197FB96C0033126D /* AYPieChartView.m in Sources */,
+				CCBC5B53197FB51F0033126D /* AYAppDelegate.m in Sources */,
+				CCBC5B59197FB51F0033126D /* AYViewController.m in Sources */,
+				CCBC5B4F197FB51F0033126D /* main.m in Sources */,
+				CCBC5B99197FB96C0033126D /* AYRotationGestureRecognizer.m in Sources */,
+				CCBC5BA2197FBB3D0033126D /* AYPieChartEntryDetailsView.m in Sources */,
+				CCBC5B97197FB96C0033126D /* AYPieChartEntry.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CCBC5B5C197FB51F0033126D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CCBC5B6E197FB5200033126D /* AYPieChartDemoTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		CCBC5B66197FB5200033126D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CCBC5B3E197FB51F0033126D /* AYPieChartDemo */;
+			targetProxy = CCBC5B65197FB5200033126D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		CCBC5B4B197FB51F0033126D /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CCBC5B4C197FB51F0033126D /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		CCBC5B6A197FB5200033126D /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CCBC5B6B197FB5200033126D /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		CCBC5B6F197FB5200033126D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		CCBC5B70197FB5200033126D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		CCBC5B72197FB5200033126D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_OBJC_ARC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "AYPieChartDemo/AYPieChartDemo-Prefix.pch";
+				INFOPLIST_FILE = "AYPieChartDemo/AYPieChartDemo-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		CCBC5B73197FB5200033126D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_OBJC_ARC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "AYPieChartDemo/AYPieChartDemo-Prefix.pch";
+				INFOPLIST_FILE = "AYPieChartDemo/AYPieChartDemo-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		CCBC5B75197FB5200033126D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/AYPieChartDemo.app/AYPieChartDemo";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "AYPieChartDemo/AYPieChartDemo-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "AYPieChartDemoTests/AYPieChartDemoTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		CCBC5B76197FB5200033126D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/AYPieChartDemo.app/AYPieChartDemo";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "AYPieChartDemo/AYPieChartDemo-Prefix.pch";
+				INFOPLIST_FILE = "AYPieChartDemoTests/AYPieChartDemoTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		CCBC5B3A197FB51F0033126D /* Build configuration list for PBXProject "AYPieChartDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CCBC5B6F197FB5200033126D /* Debug */,
+				CCBC5B70197FB5200033126D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CCBC5B71197FB5200033126D /* Build configuration list for PBXNativeTarget "AYPieChartDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CCBC5B72197FB5200033126D /* Debug */,
+				CCBC5B73197FB5200033126D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CCBC5B74197FB5200033126D /* Build configuration list for PBXNativeTarget "AYPieChartDemoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CCBC5B75197FB5200033126D /* Debug */,
+				CCBC5B76197FB5200033126D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = CCBC5B37197FB51F0033126D /* Project object */;
+}
