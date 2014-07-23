@@ -23,7 +23,7 @@ Import required headers
 
 ```
 
-Create instance of AYPieChartView and attach it to another tableView.
+Create instance of AYPieChartView and attach it to another view.
 Create instances of AYPieChartEntry according to your data and attach entries to AYPieChartView
 
 ```objc
