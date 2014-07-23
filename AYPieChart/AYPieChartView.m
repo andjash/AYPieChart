@@ -131,12 +131,13 @@
         }
         CGPathRef strokedArc = CGPathCreateCopyByStrokingPath(path, NULL, _fillLineWidth, kCGLineCapButt, kCGLineJoinRound, 30);
         
-        
         CGContextAddPath(context, strokedArc);
         CGContextSetFillColorWithColor(context, [entry color].CGColor);
         CGContextSetStrokeColorWithColor(context, self.strokeLineColor.CGColor);
         CGContextSetLineWidth(context, _strokeLineWidth);
         CGContextDrawPath(context, kCGPathFillStroke);
+        CGPathRelease(path);
+        CGPathRelease(strokedArc);
         
         if (entry.detailsView) {
             CGPoint startPoint = CGPointMake(center.x + radius * cos(startAngle), center.y + radius * sin(startAngle));
@@ -233,7 +234,7 @@
     long long startTime = [self currentTimeInMilliseconds];
     if (timeSinceLastStep == 0) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            NSUInteger step = [self currentTimeInMilliseconds] - startTime;
+            NSUInteger step = (NSUInteger)([self currentTimeInMilliseconds] - startTime);
             [self drawVelocityAnimation:velocity
                       timeSinceLastStep:step
                               clockwise:isClockwise];
@@ -241,7 +242,7 @@
     } else {
         [self rotateWithRadians:(velocity * timeSinceLastStep * (isClockwise ? 1 : -1)) * M_PI / 180];
         dispatch_async(dispatch_get_main_queue(), ^{
-            NSUInteger step = [self currentTimeInMilliseconds] - startTime;
+            NSUInteger step = (NSUInteger)([self currentTimeInMilliseconds] - startTime);
             [self drawVelocityAnimation:velocity * 0.95
                       timeSinceLastStep:step
                               clockwise:isClockwise];

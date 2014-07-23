@@ -78,7 +78,7 @@
         case UIGestureRecognizerStateChanged:
         {
             long long rotationEndTime = [self currentTimeInMilliseconds];
-            long rotationTime = rotationEndTime - rotationStartTime;
+            long long rotationTime = rotationEndTime - rotationStartTime;
             if (rotationTime > 50) {
                 rotationStartTime = [self currentTimeInMilliseconds];
                 rotationSummary = 0;
@@ -91,7 +91,7 @@
         case UIGestureRecognizerStateEnded:
         {
             long long rotationEndTime =  [self currentTimeInMilliseconds];
-            long rotationTime = rotationEndTime - rotationStartTime;
+            long long rotationTime = rotationEndTime - rotationStartTime;
             self.velocity = rotationSummary / rotationTime;
             return;
         }
