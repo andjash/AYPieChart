@@ -52,6 +52,7 @@
     self.degreesForSplit = 8;
     self.selectedChartValueIndent = 5;
     self.selectedChartValueAngleDelta = 0.01;
+    self.entryViewPostion = EntryViewPostionCenter;
 }
 
 #pragma mark - Properties
@@ -219,8 +220,13 @@
             }
             
             if (widthDistance > iconDiagonal && heightDistance > iconDiagonal) {
-                CGFloat imageX = localCenter.x + radius * cos(middleAngle);
-                CGFloat imageY = localCenter.y + radius * sin(middleAngle);
+                CGFloat distance = radius;
+                if (_entryViewPostion == EntryViewPostionCloseToSide){
+                    distance = (radius + (_strokeLineWidth + _fillLineWidth) / 2) -
+                                ([self diagonalLenght:entry.detailsView.frame.size] / 2);
+                }
+                CGFloat imageX = localCenter.x + distance * cos(middleAngle);
+                CGFloat imageY = localCenter.y + distance * sin(middleAngle);
                 imageX -= entry.detailsView.frame.size.width / 2;
                 imageY -= entry.detailsView.frame.size.height / 2;
                 entry.detailsView.frame = CGRectMake(imageX, imageY, entry.detailsView.frame.size.width, entry.detailsView.frame.size.height);

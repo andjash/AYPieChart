@@ -67,6 +67,7 @@
     self.pieChartView.selectionEnabled = YES;
     self.pieChartView.selectedChartValueIndent = 20;
     self.pieChartView.delegate = self;
+    self.pieChartView.entryViewPostion = EntryViewPostionCloseToSide;
     [self slidersActions:nil];
 }
 

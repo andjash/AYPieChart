@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSUInteger, EntryViewPostion) {
+    EntryViewPostionCenter,
+    EntryViewPostionCloseToSide,
+};
+
 @class AYPieChartView;
 @class AYPieChartEntry;
 
@@ -27,6 +32,7 @@
 @property (nonatomic, retain) UIColor *strokeLineColor;
 @property (nonatomic, assign) CGFloat fillLineWidth;
 @property (nonatomic, assign) CGFloat degreesForSplit;
+@property (nonatomic, assign) EntryViewPostion entryViewPostion;
 
 @property (nonatomic, assign) BOOL rotationEnabled;
 @property (nonatomic, assign) BOOL selectionEnabled;
