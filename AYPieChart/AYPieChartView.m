@@ -15,6 +15,8 @@
 @property (nonatomic, retain) NSMutableArray *fadeOutEntries;
 @property (nonatomic, assign) CGFloat rotation;
 @property (nonatomic, retain) AYRotationGestureRecognizer *rotationRecognizer;
+@property (nonatomic, retain) UITapGestureRecognizer *tapRecognizer;
+@property (nonatomic, retain) AYPieChartEntry *selectedChartEntry;
 
 @end
 
@@ -23,6 +25,9 @@
 #pragma mark - Init&Dealloc
 
 - (void)dealloc {
+    [_tapRecognizer release];
+    [_rotationRecognizer release];
+    [_selectedChartEntry release];
     [_fadeOutEntries release];
     [_pieValues release];
     [super dealloc];
@@ -33,22 +38,40 @@
     self.rotationRecognizer = [[[AYRotationGestureRecognizer alloc] initWithTarget:self
                                                                             action:@selector(rotationRecognized:)]
                                                      autorelease];
+    self.tapRecognizer = [[[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                  action:@selector(tapRecognized:)]
+                          autorelease];
+    self.tapRecognizer.numberOfTouchesRequired = 1;
+    self.tapRecognizer.numberOfTapsRequired = 1;
+
+    
     self.rotationEnabled = YES;
     self.fadeOutEntries = [NSMutableArray array];
     self.strokeLineColor = [UIColor whiteColor];
     self.strokeLineWidth = 1.5;
     self.fillLineWidth = 80;
     self.degreesForSplit = 8;
+    self.selectedChartValueIndent = 5;
+    self.selectedChartValueAngleDelta = 0.01;
 }
 
 #pragma mark - Properties
 
-- (void)setRotationEnabled:(CGFloat)rotationEnabled {
+- (void)setRotationEnabled:(BOOL)rotationEnabled {
     _rotationEnabled = rotationEnabled;
     if (_rotationEnabled) {
         [self addGestureRecognizer:self.rotationRecognizer];
     } else {
         [self removeGestureRecognizer:self.rotationRecognizer];
+    }
+}
+
+- (void)setSelectionEnabled:(BOOL)selectionEnabled {
+    _selectionEnabled = selectionEnabled;
+    if (_selectionEnabled) {
+        [self addGestureRecognizer:self.tapRecognizer];
+    } else {
+        [self removeGestureRecognizer:self.tapRecognizer];
     }
 }
 
@@ -63,7 +86,13 @@
 }
 
 - (void)setFillLineWidth:(CGFloat)fillLineWidth {
-    _fillLineWidth = fillLineWidth;
+    CGFloat width = self.frame.size.width;
+    CGFloat height = self.frame.size.height;
+    CGPoint center = {width / 2, height / 2};
+    CGFloat r = width > height ? center.y : center.x;
+    
+    CGFloat maxFill = r - _selectedChartValueIndent - _strokeLineWidth;
+    _fillLineWidth = MIN(fillLineWidth, maxFill);
     [self setNeedsDisplay];
 }
 
@@ -80,7 +109,7 @@
     CGFloat height = rect.size.height;
     CGPoint center = {width / 2, height / 2};
     CGFloat radius = width > height ? center.y : center.x;
-    radius -= (_fillLineWidth + _strokeLineWidth) / 2;
+    radius -= ((_fillLineWidth + _strokeLineWidth) / 2) + _selectedChartValueIndent;
     CGContextRef context = UIGraphicsGetCurrentContext();
     
     CGFloat summ = [self summFromPieValues:self.pieValues];
@@ -117,12 +146,25 @@
         
         CGMutablePathRef path = CGPathCreateMutable();
         
-        CGFloat startX = center.x + radius * cos(startAngle);
-        CGFloat startY = center.y + radius * sin(startAngle);
+        CGFloat localStartAngle = startAngle;
+        CGFloat localEndAngle = endAngle;
+        CGPoint localCenter = center;
+        
+        if (self.selectedChartEntry == entry) {
+            CGFloat angleDelta = _selectedChartValueAngleDelta;
+            localStartAngle = startAngle - angleDelta;
+            localEndAngle = endAngle + angleDelta;
+            CGFloat middleAngle = (localStartAngle + localEndAngle) / 2;
+            localCenter = CGPointMake(center.x + _selectedChartValueIndent * cos(middleAngle),
+                                      center.y + _selectedChartValueIndent * sin(middleAngle));
+        }
+        
+        CGFloat startX = localCenter.x + radius * cos(localStartAngle);
+        CGFloat startY = localCenter.y + radius * sin(localStartAngle);
         CGPathMoveToPoint(path, NULL, startX, startY);
         
         if (notVoidValuesCount > 1) {
-            CGPathAddArc(path, NULL, center.x, center.y, radius, startAngle, endAngle, YES);
+            CGPathAddArc(path, NULL, localCenter.x, localCenter.y, radius, localStartAngle, localEndAngle, YES);
         } else {
             CGPathAddEllipseInRect(path, NULL, CGRectMake(center.x - radius,
                                                           center.y - radius,
@@ -140,18 +182,18 @@
         CGPathRelease(strokedArc);
         
         if (entry.detailsView) {
-            CGPoint startPoint = CGPointMake(center.x + radius * cos(startAngle), center.y + radius * sin(startAngle));
-            CGPoint endPoint = CGPointMake(center.x + radius * cos(endAngle), center.y + radius * sin(endAngle));
+            CGPoint startPoint = CGPointMake(localCenter.x + radius * cos(localStartAngle), center.y + radius * sin(localStartAngle));
+            CGPoint endPoint = CGPointMake(localCenter.x + radius * cos(localEndAngle), center.y + radius * sin(localEndAngle));
             CGFloat widthDistance = [self distanceBetween:startPoint and:endPoint];
-            if (fabs(endAngle - startAngle) > M_PI_2) {
+            if (fabs(localEndAngle - localStartAngle) > M_PI_2) {
                 widthDistance = CGFLOAT_MAX;
             }
             
-            CGFloat middleAngle = (startAngle + endAngle) / 2;
-            startPoint = CGPointMake(center.x + (radius - (_fillLineWidth - _strokeLineWidth) / 2) * cos(middleAngle),
-                                     center.y + (radius - (_fillLineWidth - _strokeLineWidth) / 2) * sin(middleAngle));
-            endPoint = CGPointMake(center.x + (radius + (_fillLineWidth + _strokeLineWidth) / 2) * cos(middleAngle),
-                                   center.y + (radius + (_fillLineWidth + _strokeLineWidth) / 2) * sin(middleAngle));
+            CGFloat middleAngle = (localStartAngle + localEndAngle) / 2;
+            startPoint = CGPointMake(localCenter.x + (radius - (_fillLineWidth - _strokeLineWidth) / 2) * cos(middleAngle),
+                                     localCenter.y + (radius - (_fillLineWidth - _strokeLineWidth) / 2) * sin(middleAngle));
+            endPoint = CGPointMake(localCenter.x + (radius + (_fillLineWidth + _strokeLineWidth) / 2) * cos(middleAngle),
+                                   localCenter.y + (radius + (_fillLineWidth + _strokeLineWidth) / 2) * sin(middleAngle));
             CGFloat heightDistance = [self distanceBetween:startPoint and:endPoint];
             
             CGSize fullSize = [entry.detailsView fullViewSize];
@@ -165,8 +207,8 @@
             }
             
             if (widthDistance > iconDiagonal && heightDistance > iconDiagonal) {
-                CGFloat imageX = center.x + radius * cos(middleAngle);
-                CGFloat imageY = center.y + radius * sin(middleAngle);
+                CGFloat imageX = localCenter.x + radius * cos(middleAngle);
+                CGFloat imageY = localCenter.y + radius * sin(middleAngle);
                 imageX -= entry.detailsView.frame.size.width / 2;
                 imageY -= entry.detailsView.frame.size.height / 2;
                 entry.detailsView.frame = CGRectMake(imageX, imageY, entry.detailsView.frame.size.width, entry.detailsView.frame.size.height);
@@ -215,6 +257,13 @@
     return sqrt((xDist * xDist) + (yDist * yDist));
 }
 
+- (CGFloat)angleBetweenFirstPoint:(CGPoint)first
+                      secondPoint:(CGPoint)secondPoint
+                           center:(CGPoint)center {
+    return atan2f(first.y - center.y, first.x - center.x) -
+           atan2f(secondPoint.y - center.y, secondPoint.x - center.x);
+}
+
 - (void)rotationRecognized:(AYRotationGestureRecognizer *)gesture {
     CGFloat velocity = [gesture velocity];
     if (velocity != 0) {
@@ -223,6 +272,75 @@
                           clockwise:gesture.velocityIsClockwise];
     }
     [self rotateWithRadians:gesture.rotationInRadians];
+}
+
+- (void)tapRecognized:(UITapGestureRecognizer *)gesture {
+    CGFloat summ = [self summFromPieValues:self.pieValues];
+    if (summ == 0) {
+        return;
+    }
+    
+    CGPoint currentTouchPoint = [gesture locationInView:self];
+    CGFloat width = self.frame.size.width;
+    CGFloat height = self.frame.size.height;
+    CGPoint center = {width / 2, height / 2};
+    CGFloat radius = width > height ? center.y : center.x;
+    
+    if ([self distanceBetween:currentTouchPoint and:center] > radius) {
+        self.selectedChartEntry = nil;
+        [self setNeedsDisplay];
+        return;
+    }
+  
+    CGFloat startAngle = 0;
+    if (_rotation > 0) {
+        startAngle = (-360 + _rotation) * M_PI / 180;
+    } else {
+        startAngle = _rotation * M_PI / 180;
+    }
+    
+    CGPoint countingStartPoint = CGPointMake(center.x + 1 * cos(startAngle),
+                                             center.y + 1 * sin(startAngle));
+    CGFloat angleOfTouchInRadians = [self angleBetweenFirstPoint:currentTouchPoint
+                                              secondPoint:countingStartPoint
+                                                   center:center];;
+    if (angleOfTouchInRadians > 0) {
+        angleOfTouchInRadians = (- 2 * M_PI) + angleOfTouchInRadians;
+    }
+    angleOfTouchInRadians += startAngle;
+    
+    CGFloat endAngle = 0.0f;
+    CGFloat radiansForSplit = (_degreesForSplit/*degree per connection*/ * M_PI) / 180;
+    
+    NSUInteger notVoidValuesCount = 0;
+    for (AYPieChartEntry *entry in self.pieValues) {
+        if (entry.value > 0) {
+            notVoidValuesCount++;
+        }
+    }
+    notVoidValuesCount = notVoidValuesCount == 1 ? 0 : notVoidValuesCount;
+    CGFloat avaliableCircleSpace = (2 * M_PI) - (radiansForSplit * notVoidValuesCount);
+    
+    
+    for (AYPieChartEntry *entry in self.pieValues) {
+        if (entry.value == 0) {
+            continue;
+        }
+        endAngle = -(fabs(startAngle) + (avaliableCircleSpace * entry.value / summ));
+        if (startAngle > angleOfTouchInRadians && angleOfTouchInRadians > endAngle) {
+            if (_selectedChartEntry == entry) {
+                self.selectedChartEntry = nil;
+            } else {
+                self.selectedChartEntry = entry;
+            }
+            [self setNeedsDisplay];
+            return;
+        }
+        startAngle = endAngle - radiansForSplit;
+    }
+    self.selectedChartEntry = nil;
+    [self setNeedsDisplay];
+   
 }
 
 - (void)drawVelocityAnimation:(CGFloat)velocity

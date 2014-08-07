@@ -64,6 +64,8 @@
     self.thirdDetails.imageView.image = [UIImage imageNamed:@"fry"];
     self.thirdDetails.titleLabel.text = @"Fry";
 
+    self.pieChartView.selectionEnabled = YES;
+    self.pieChartView.selectedChartValueIndent = 20;
     [self slidersActions:nil];
 }
 

@@ -16,6 +16,12 @@
 @property (nonatomic, retain) UIColor *strokeLineColor;
 @property (nonatomic, assign) CGFloat fillLineWidth;
 @property (nonatomic, assign) CGFloat degreesForSplit;
-@property (nonatomic, assign) CGFloat rotationEnabled;
+
+@property (nonatomic, assign) BOOL rotationEnabled;
+@property (nonatomic, assign) BOOL selectionEnabled;
+
+@property (nonatomic, assign) CGFloat selectedChartValueIndent;
+@property (nonatomic, assign) CGFloat selectedChartValueAngleDelta; // in radians
+
 
 @end
