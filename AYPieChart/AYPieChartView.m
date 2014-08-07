@@ -55,6 +55,42 @@
     self.entryViewPostion = EntryViewPostionCenter;
 }
 
+#pragma mark - Public
+
+- (CGFloat)angleInDegreesForPieChartEntry:(AYPieChartEntry *)targetEntry {
+    CGFloat startAngle = 0;
+    if (_rotation > 0) {
+        startAngle = (-360 + _rotation) * M_PI / 180;
+    } else {
+        startAngle = _rotation * M_PI / 180;
+    }
+    
+    CGFloat endAngle = 0.0f;
+    CGFloat radiansForSplit = (_degreesForSplit/*degree per connection*/ * M_PI) / 180;
+    
+    NSUInteger notVoidValuesCount = 0;
+    for (AYPieChartEntry *entry in self.pieValues) {
+        if (entry.value > 0) {
+            notVoidValuesCount++;
+        }
+    }
+    notVoidValuesCount = notVoidValuesCount == 1 ? 0 : notVoidValuesCount;
+    CGFloat avaliableCircleSpace = (2 * M_PI) - (radiansForSplit * notVoidValuesCount);
+    CGFloat summ = [self summFromPieValues:self.pieValues];
+    
+    for (AYPieChartEntry *entry in self.pieValues) {
+        if (entry.value == 0) {
+            continue;
+        }
+        endAngle = -(fabs(startAngle) + (avaliableCircleSpace * entry.value / summ));
+        if (entry == targetEntry) {
+            return -fmod((((startAngle + endAngle) / 2) * 180 / M_PI), 360);
+        }
+        startAngle = endAngle - radiansForSplit;
+    }
+    return 0;
+}
+
 #pragma mark - Properties
 
 - (void)setSelectedChartEntry:(AYPieChartEntry *)selectedChartEntry {

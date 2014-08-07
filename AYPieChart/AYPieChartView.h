@@ -43,4 +43,6 @@ typedef NS_ENUM(NSUInteger, EntryViewPostion) {
 
 @property (nonatomic, assign) id<AYPieChartViewDelegate> delegate;
 
+- (CGFloat)angleInDegreesForPieChartEntry:(AYPieChartEntry *)entry;
+
 @end
