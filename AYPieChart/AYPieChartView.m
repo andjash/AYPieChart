@@ -16,7 +16,6 @@
 @property (nonatomic, assign) CGFloat rotation;
 @property (nonatomic, retain) AYRotationGestureRecognizer *rotationRecognizer;
 @property (nonatomic, retain) UITapGestureRecognizer *tapRecognizer;
-@property (nonatomic, retain) AYPieChartEntry *selectedChartEntry;
 
 @end
 
@@ -56,6 +55,19 @@
 }
 
 #pragma mark - Properties
+
+- (void)setSelectedChartEntry:(AYPieChartEntry *)selectedChartEntry {
+    AYPieChartEntry *oldEntry = [_selectedChartEntry retain];
+    [_selectedChartEntry autorelease];
+    _selectedChartEntry = [selectedChartEntry retain];
+    if (_selectedChartEntry && [_delegate respondsToSelector:@selector(pieChart:didSelectChartEntry:)]) {
+        [_delegate pieChart:self didSelectChartEntry:_selectedChartEntry];
+    }
+    if (oldEntry && [_delegate respondsToSelector:@selector(pieChart:didDeselectChartEntry:)]) {
+        [_delegate pieChart:self didDeselectChartEntry:oldEntry];
+    }
+    [oldEntry release];
+}
 
 - (void)setRotationEnabled:(BOOL)rotationEnabled {
     _rotationEnabled = rotationEnabled;
@@ -150,7 +162,7 @@
         CGFloat localEndAngle = endAngle;
         CGPoint localCenter = center;
         
-        if (self.selectedChartEntry == entry) {
+        if (self.selectedChartEntry == entry && notVoidValuesCount > 1) {
             CGFloat angleDelta = _selectedChartValueAngleDelta;
             localStartAngle = startAngle - angleDelta;
             localEndAngle = endAngle + angleDelta;

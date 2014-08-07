@@ -11,7 +11,7 @@
 #import "AYPieChartEntryDetailsView.h"
 #import "AYPieChartEntry.h"
 
-@interface AYViewController ()
+@interface AYViewController ()<AYPieChartViewDelegate>
 
 @property (nonatomic, retain) IBOutlet AYPieChartView *pieChartView;
 @property (nonatomic, retain) IBOutlet UISlider *strokeSlider;
@@ -66,6 +66,7 @@
 
     self.pieChartView.selectionEnabled = YES;
     self.pieChartView.selectedChartValueIndent = 20;
+    self.pieChartView.delegate = self;
     [self slidersActions:nil];
 }
 
@@ -87,6 +88,14 @@
                                                detailsView:_thirdDetails]
                              ];
     self.pieChartView.pieValues = chartValues;
+}
+
+#pragma mark - AYPieChartViewDelegate
+
+- (void)pieChart:(AYPieChartView *)chartView didSelectChartEntry:(AYPieChartEntry *)entry {
+}
+- (void)pieChart:(AYPieChartView *)chartView didDeselectChartEntry:(AYPieChartEntry *)entry {
+
 }
 
 #pragma mark - Actions

@@ -8,6 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+@class AYPieChartView;
+@class AYPieChartEntry;
+
+@protocol AYPieChartViewDelegate <NSObject>
+
+@optional
+- (void)pieChart:(AYPieChartView *)chartView didSelectChartEntry:(AYPieChartEntry *)entry;
+- (void)pieChart:(AYPieChartView *)chartView didDeselectChartEntry:(AYPieChartEntry *)entry;
+
+@end
+
 @interface AYPieChartView : UIView
 
 @property (nonatomic, retain) NSArray *pieValues; // array of AYPieChartEntry
@@ -20,8 +31,10 @@
 @property (nonatomic, assign) BOOL rotationEnabled;
 @property (nonatomic, assign) BOOL selectionEnabled;
 
+@property (nonatomic, retain) AYPieChartEntry *selectedChartEntry;
 @property (nonatomic, assign) CGFloat selectedChartValueIndent;
 @property (nonatomic, assign) CGFloat selectedChartValueAngleDelta; // in radians
 
+@property (nonatomic, assign) id<AYPieChartViewDelegate> delegate;
 
 @end
