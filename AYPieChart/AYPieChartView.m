@@ -104,6 +104,7 @@
         [_delegate pieChart:self didDeselectChartEntry:oldEntry];
     }
     [oldEntry release];
+    [self setNeedsDisplay];
 }
 
 - (void)setRotationEnabled:(BOOL)rotationEnabled {
