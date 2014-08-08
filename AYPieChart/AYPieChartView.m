@@ -200,7 +200,8 @@
         CGPoint localCenter = center;
         
         if (self.selectedChartEntry == entry && notVoidValuesCount > 1) {
-            CGFloat angleDelta = _selectedChartValueAngleDelta;
+            CGFloat angleDelta = MIN(_selectedChartValueAngleDelta,
+                                     fabs(localEndAngle - localStartAngle) / 10);
             localStartAngle = startAngle - angleDelta;
             localEndAngle = endAngle + angleDelta;
             CGFloat middleAngle = (localStartAngle + localEndAngle) / 2;
