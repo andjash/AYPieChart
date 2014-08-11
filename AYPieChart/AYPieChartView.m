@@ -83,7 +83,13 @@
         if (entry.value == 0) {
             continue;
         }
-        endAngle = -(fabs(startAngle) + (avaliableCircleSpace * entry.value / summ));
+        CGFloat segmentAngle = (avaliableCircleSpace * entry.value / summ);
+        if (segmentAngle < _minSegmentAngle) {
+            segmentAngle = _minSegmentAngle;
+        }
+        summ -= entry.value;
+        avaliableCircleSpace -= segmentAngle;
+        endAngle = -(fabs(startAngle) + segmentAngle);
         if (entry == targetEntry) {
             return -fmod((((startAngle + endAngle) / 2) * 180 / M_PI), 360);
         }
@@ -398,7 +404,13 @@
         if (entry.value == 0) {
             continue;
         }
-        endAngle = -(fabs(startAngle) + (avaliableCircleSpace * entry.value / summ));
+        CGFloat segmentAngle = (avaliableCircleSpace * entry.value / summ);
+        if (segmentAngle < _minSegmentAngle) {
+            segmentAngle = _minSegmentAngle;
+        }
+        summ -= entry.value;
+        avaliableCircleSpace -= segmentAngle;
+        endAngle = -(fabs(startAngle) + segmentAngle);
         if (startAngle > angleOfTouchInRadians && angleOfTouchInRadians > endAngle) {
             if (_selectedChartEntry == entry) {
                 self.selectedChartEntry = nil;
