@@ -52,6 +52,7 @@
     self.degreesForSplit = 8;
     self.selectedChartValueIndent = 5;
     self.selectedChartValueAngleDelta = 0.01;
+    self.minSegmentAngle = -CGFLOAT_MAX;
     self.entryViewPostion = EntryViewPostionCenter;
 }
 
@@ -201,7 +202,13 @@
         if (entry.value == 0) {
             continue;
         }
-        endAngle = -(fabs(startAngle) + (avaliableCircleSpace * entry.value / summ));
+        CGFloat segmentAngle = (avaliableCircleSpace * entry.value / summ);
+        if (segmentAngle < _minSegmentAngle) {
+            segmentAngle = _minSegmentAngle;
+        }
+        summ -= entry.value;
+        avaliableCircleSpace -= segmentAngle;
+        endAngle = -(fabs(startAngle) + segmentAngle);
         
         CGMutablePathRef path = CGPathCreateMutable();
         

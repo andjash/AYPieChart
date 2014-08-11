@@ -34,6 +34,7 @@ typedef NS_ENUM(NSUInteger, EntryViewPostion) {
 @property (nonatomic, assign) CGFloat fillLineWidth;
 @property (nonatomic, assign) CGFloat degreesForSplit;
 @property (nonatomic, assign) EntryViewPostion entryViewPostion;
+@property (nonatomic, assign) CGFloat minSegmentAngle;
 
 @property (nonatomic, assign) BOOL rotationEnabled;
 @property (nonatomic, assign) BOOL selectionEnabled;
