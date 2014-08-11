@@ -94,6 +94,12 @@
 #pragma mark - Properties
 
 - (void)setSelectedChartEntry:(AYPieChartEntry *)selectedChartEntry {
+    if ([_delegate respondsToSelector:@selector(pieChart:willSelectChartEntry:)]) {
+        if (![_delegate pieChart:self willSelectChartEntry:selectedChartEntry]) {
+            return;
+        }
+    }
+    
     AYPieChartEntry *oldEntry = [_selectedChartEntry retain];
     [_selectedChartEntry autorelease];
     _selectedChartEntry = [selectedChartEntry retain];

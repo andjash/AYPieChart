@@ -19,6 +19,7 @@ typedef NS_ENUM(NSUInteger, EntryViewPostion) {
 @protocol AYPieChartViewDelegate <NSObject>
 
 @optional
+- (BOOL)pieChart:(AYPieChartView *)chartView willSelectChartEntry:(AYPieChartEntry *)entry;
 - (void)pieChart:(AYPieChartView *)chartView didSelectChartEntry:(AYPieChartEntry *)entry;
 - (void)pieChart:(AYPieChartView *)chartView didDeselectChartEntry:(AYPieChartEntry *)entry;
 
