@@ -153,6 +153,9 @@
 }
 
 - (void)setPieValues:(NSArray *)pieValues {
+    for (AYPieChartEntry *entry in _pieValues) {
+        [entry.detailsView removeFromSuperview];
+    }
     [_pieValues autorelease];
     _pieValues = [pieValues retain];
     [self setNeedsDisplay];
