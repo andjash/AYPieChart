@@ -16,6 +16,7 @@
 @property (nonatomic, assign) CGFloat rotation;
 @property (nonatomic, retain) AYRotationGestureRecognizer *rotationRecognizer;
 @property (nonatomic, retain) UITapGestureRecognizer *tapRecognizer;
+@property (nonatomic, retain) NSArray *innerPieValues;
 
 @end
 
@@ -24,6 +25,7 @@
 #pragma mark - Init&Dealloc
 
 - (void)dealloc {
+    [_innerPieValues release];
     [_tapRecognizer release];
     [_rotationRecognizer release];
     [_selectedChartEntry release];
@@ -70,26 +72,20 @@
     CGFloat radiansForSplit = (_degreesForSplit/*degree per connection*/ * M_PI) / 180;
     
     NSUInteger notVoidValuesCount = 0;
-    for (AYPieChartEntry *entry in self.pieValues) {
+    for (AYPieChartEntry *entry in self.innerPieValues) {
         if (entry.value > 0) {
             notVoidValuesCount++;
         }
     }
     notVoidValuesCount = notVoidValuesCount == 1 ? 0 : notVoidValuesCount;
     CGFloat avaliableCircleSpace = (2 * M_PI) - (radiansForSplit * notVoidValuesCount);
-    CGFloat summ = [self summFromPieValues:self.pieValues];
+    CGFloat summ = [self summFromPieValues:self.innerPieValues];
     
-    for (AYPieChartEntry *entry in self.pieValues) {
+    for (AYPieChartEntry *entry in self.innerPieValues) {
         if (entry.value == 0) {
             continue;
         }
-        CGFloat segmentAngle = (avaliableCircleSpace * entry.value / summ);
-        if (segmentAngle < _minSegmentAngle) {
-            segmentAngle = _minSegmentAngle;
-        }
-        summ -= entry.value;
-        avaliableCircleSpace -= segmentAngle;
-        endAngle = -(fabs(startAngle) + segmentAngle);
+        endAngle = -(fabs(startAngle) + (avaliableCircleSpace * entry.value / summ));
         if (entry == targetEntry) {
             return -fmod((((startAngle + endAngle) / 2) * 180 / M_PI), 360);
         }
@@ -165,6 +161,13 @@
     }
     [_pieValues autorelease];
     _pieValues = [pieValues retain];
+    [self recreateInnerPieValues];
+    [self setNeedsDisplay];
+}
+
+- (void)setMinSegmentAngle:(CGFloat)minSegmentAngle {
+    _minSegmentAngle = minSegmentAngle;
+    [self recreateInnerPieValues];
     [self setNeedsDisplay];
 }
 
@@ -178,9 +181,9 @@
     radius -= ((_fillLineWidth + _strokeLineWidth) / 2) + _selectedChartValueIndent;
     CGContextRef context = UIGraphicsGetCurrentContext();
     
-    CGFloat summ = [self summFromPieValues:self.pieValues];
+    CGFloat summ = [self summFromPieValues:self.innerPieValues];
     if (summ == 0) {
-        for (AYPieChartEntry *entry in self.pieValues) {
+        for (AYPieChartEntry *entry in self.innerPieValues) {
             [entry.detailsView removeFromSuperview];
         }
         return;
@@ -196,7 +199,7 @@
     CGFloat radiansForSplit = (_degreesForSplit/*degree per connection*/ * M_PI) / 180;
     
     NSUInteger notVoidValuesCount = 0;
-    for (AYPieChartEntry *entry in self.pieValues) {
+    for (AYPieChartEntry *entry in self.innerPieValues) {
         if (entry.value > 0) {
             notVoidValuesCount++;
         }
@@ -204,18 +207,11 @@
     notVoidValuesCount = notVoidValuesCount == 1 ? 0 : notVoidValuesCount;
     CGFloat avaliableCircleSpace = (2 * M_PI) - (radiansForSplit * notVoidValuesCount);
     
-    for (AYPieChartEntry *entry in self.pieValues) {
+    for (AYPieChartEntry *entry in self.innerPieValues) {
         if (entry.value == 0) {
             continue;
         }
-        CGFloat segmentAngle = (avaliableCircleSpace * entry.value / summ);
-        if (segmentAngle < _minSegmentAngle) {
-            segmentAngle = _minSegmentAngle;
-        }
-        summ -= entry.value;
-        avaliableCircleSpace -= segmentAngle;
-        endAngle = -(fabs(startAngle) + segmentAngle);
-        
+        endAngle = -(fabs(startAngle) + (avaliableCircleSpace * entry.value / summ));
         CGMutablePathRef path = CGPathCreateMutable();
         
         CGFloat localStartAngle = startAngle;
@@ -316,6 +312,86 @@
 
 #pragma mark - Private
 
+- (void)recreateInnerPieValues {
+    if (_minSegmentAngle < 0 || _minSegmentAngle > 2 * M_PI) {
+        self.innerPieValues = self.pieValues;
+        return;
+    }
+    NSMutableArray *initialValues = [NSMutableArray arrayWithCapacity:[self.pieValues count]];
+    CGFloat summ = 0;
+    for (AYPieChartEntry *entry in self.pieValues) {
+        [initialValues addObject:@(entry.value)];
+        summ += entry.value;
+    }
+    CGFloat minValue = (self.minSegmentAngle / (2 * M_PI)) * summ;
+    NSArray *balancedValues = [self balanceArray:initialValues withMinValue:minValue];
+    NSMutableArray *result = [NSMutableArray arrayWithCapacity:[self.pieValues count]];
+    for (int i = 0 ; i < [self.pieValues count]; i++) {
+        AYPieChartEntry *newEntry = [AYPieChartEntry entryWithValue:[balancedValues[i] floatValue]
+                                                              color:[self.pieValues[i] color]
+                                                        detailsView:[self.pieValues[i] detailsView]];
+        [result addObject:newEntry];
+    }
+    self.innerPieValues = result;
+}
+
+
+- (NSArray *)balanceArray:(NSArray *)target withMinValue:(CGFloat)minValue {
+    NSMutableArray *neutralValues = [NSMutableArray array];
+    NSMutableArray *valuesToDecrease = [NSMutableArray array];
+    NSMutableArray *result = [NSMutableArray arrayWithArray:target];
+    CGFloat balanceValue = 0;
+    
+    for (int i = 0; i < [target count]; i++) {
+        NSNumber *number = target[i];
+        CGFloat floatValue = [number floatValue];
+        
+        if (floatValue == minValue) {
+            [neutralValues addObject:@[@(minValue), @(i)]];
+            continue;
+        }
+        
+        if (floatValue < minValue) {
+            [neutralValues addObject:@[@(minValue), @(i)]];
+            balanceValue += minValue + floatValue;
+            continue;
+        }
+        
+        [valuesToDecrease addObject:@[number, @(i)]];
+    }
+    
+    NSArray *decreasedValues = [self decreaseValue:balanceValue
+                                         fromArray:valuesToDecrease
+                                          minValue:minValue];
+    
+    for (NSArray *values in decreasedValues) {
+        [result replaceObjectAtIndex:[values[1] unsignedIntegerValue] withObject:values[0]];
+    }
+    for (NSArray *values in neutralValues) {
+        [result replaceObjectAtIndex:[values[1] unsignedIntegerValue] withObject:values[0]];
+    }
+    
+    return result;
+}
+
+- (NSArray *)decreaseValue:(CGFloat)balanceValue fromArray:(NSArray *)target minValue:(CGFloat)min {
+    NSMutableArray *result = [NSMutableArray array];
+    CGFloat targetArraySumm = 0;
+    for (NSArray *value in target) {
+        targetArraySumm += [value[0] floatValue];
+    }
+    
+    CGFloat difRes = 0;
+    for (NSArray *value in target) {
+        CGFloat floatValue = [value[0] floatValue];
+        
+        CGFloat newValue = MAX(min, floatValue - ((floatValue / targetArraySumm) * balanceValue));
+        difRes += floatValue - newValue;
+        [result addObject:@[@(newValue), value[1]]];
+    }
+    return result;
+}
+
 - (CGFloat)summFromPieValues:(NSArray *)pieValues {
     CGFloat result = 0;
     for (AYPieChartEntry *entry in pieValues) {
@@ -353,7 +429,7 @@
 }
 
 - (void)tapRecognized:(UITapGestureRecognizer *)gesture {
-    CGFloat summ = [self summFromPieValues:self.pieValues];
+    CGFloat summ = [self summFromPieValues:self.innerPieValues];
     if (summ == 0) {
         return;
     }
@@ -391,7 +467,7 @@
     CGFloat radiansForSplit = (_degreesForSplit/*degree per connection*/ * M_PI) / 180;
     
     NSUInteger notVoidValuesCount = 0;
-    for (AYPieChartEntry *entry in self.pieValues) {
+    for (AYPieChartEntry *entry in self.innerPieValues) {
         if (entry.value > 0) {
             notVoidValuesCount++;
         }
@@ -400,17 +476,12 @@
     CGFloat avaliableCircleSpace = (2 * M_PI) - (radiansForSplit * notVoidValuesCount);
     
     
-    for (AYPieChartEntry *entry in self.pieValues) {
+    for (AYPieChartEntry *entry in self.innerPieValues) {
         if (entry.value == 0) {
             continue;
         }
-        CGFloat segmentAngle = (avaliableCircleSpace * entry.value / summ);
-        if (segmentAngle < _minSegmentAngle) {
-            segmentAngle = _minSegmentAngle;
-        }
-        summ -= entry.value;
-        avaliableCircleSpace -= segmentAngle;
-        endAngle = -(fabs(startAngle) + segmentAngle);
+        
+        endAngle = -(fabs(startAngle) + (avaliableCircleSpace * entry.value / summ));
         if (startAngle > angleOfTouchInRadians && angleOfTouchInRadians > endAngle) {
             if (_selectedChartEntry == entry) {
                 self.selectedChartEntry = nil;
