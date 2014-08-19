@@ -38,13 +38,13 @@
     [super awakeFromNib];
     self.rotationRecognizer = [[[AYRotationGestureRecognizer alloc] initWithTarget:self
                                                                             action:@selector(rotationRecognized:)]
-                                                     autorelease];
+                               autorelease];
     self.tapRecognizer = [[[UITapGestureRecognizer alloc] initWithTarget:self
                                                                   action:@selector(tapRecognized:)]
                           autorelease];
     self.tapRecognizer.numberOfTouchesRequired = 1;
     self.tapRecognizer.numberOfTapsRequired = 1;
-
+    
     
     self.rotationEnabled = YES;
     self.fadeOutEntries = [NSMutableArray array];
@@ -61,6 +61,7 @@
 #pragma mark - Public
 
 - (CGFloat)angleInDegreesForPieChartEntry:(AYPieChartEntry *)targetEntry {
+    targetEntry = self.innerPieValues[[self.pieValues indexOfObject:targetEntry]];
     CGFloat startAngle = 0;
     if (_rotation > 0) {
         startAngle = (-360 + _rotation) * M_PI / 180;
@@ -217,8 +218,8 @@
         CGFloat localStartAngle = startAngle;
         CGFloat localEndAngle = endAngle;
         CGPoint localCenter = center;
-        
-        if (self.selectedChartEntry == entry && notVoidValuesCount > 1) {
+        BOOL isSelectedEntry = [self.pieValues indexOfObject:self.selectedChartEntry] == [self.innerPieValues indexOfObject:entry];
+        if (isSelectedEntry && notVoidValuesCount > 1) {
             CGFloat angleDelta = MIN(_selectedChartValueAngleDelta,
                                      fabs(localEndAngle - localStartAngle) / 10);
             localStartAngle = startAngle - angleDelta;
@@ -279,7 +280,7 @@
                 CGFloat distance = radius;
                 if (_entryViewPostion == EntryViewPostionCloseToSide){
                     distance = (radius + (_strokeLineWidth + _fillLineWidth) / 2) -
-                                ([self diagonalLenght:entry.detailsView.frame.size] / 2);
+                    ([self diagonalLenght:entry.detailsView.frame.size] / 2);
                 }
                 CGFloat imageX = localCenter.x + distance * cos(middleAngle);
                 CGFloat imageY = localCenter.y + distance * sin(middleAngle);
@@ -415,7 +416,7 @@
                       secondPoint:(CGPoint)secondPoint
                            center:(CGPoint)center {
     return atan2f(first.y - center.y, first.x - center.x) -
-           atan2f(secondPoint.y - center.y, secondPoint.x - center.x);
+    atan2f(secondPoint.y - center.y, secondPoint.x - center.x);
 }
 
 - (void)rotationRecognized:(AYRotationGestureRecognizer *)gesture {
@@ -445,7 +446,7 @@
         [self setNeedsDisplay];
         return;
     }
-  
+    
     CGFloat startAngle = 0;
     if (_rotation > 0) {
         startAngle = (-360 + _rotation) * M_PI / 180;
@@ -456,8 +457,8 @@
     CGPoint countingStartPoint = CGPointMake(center.x + 1 * cos(startAngle),
                                              center.y + 1 * sin(startAngle));
     CGFloat angleOfTouchInRadians = [self angleBetweenFirstPoint:currentTouchPoint
-                                              secondPoint:countingStartPoint
-                                                   center:center];;
+                                                     secondPoint:countingStartPoint
+                                                          center:center];;
     if (angleOfTouchInRadians > 0) {
         angleOfTouchInRadians = (- 2 * M_PI) + angleOfTouchInRadians;
     }
@@ -483,10 +484,11 @@
         
         endAngle = -(fabs(startAngle) + (avaliableCircleSpace * entry.value / summ));
         if (startAngle > angleOfTouchInRadians && angleOfTouchInRadians > endAngle) {
-            if (_selectedChartEntry == entry) {
+            BOOL isSelectedEntry = [self.pieValues indexOfObject:self.selectedChartEntry] == [self.innerPieValues indexOfObject:entry];
+            if (isSelectedEntry) {
                 self.selectedChartEntry = nil;
             } else {
-                self.selectedChartEntry = entry;
+                self.selectedChartEntry = self.pieValues[[self.innerPieValues indexOfObject:entry]];
             }
             [self setNeedsDisplay];
             return;
@@ -495,7 +497,7 @@
     }
     self.selectedChartEntry = nil;
     [self setNeedsDisplay];
-   
+    
 }
 
 - (void)drawVelocityAnimation:(CGFloat)velocity
