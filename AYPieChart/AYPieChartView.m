@@ -56,6 +56,7 @@
     self.selectedChartValueAngleDelta = 0.01;
     self.minSegmentAngle = -CGFLOAT_MAX;
     self.entryViewPostion = EntryViewPostionCenter;
+    self.selectedEntryColor = [UIColor colorWithWhite:1 alpha:0.15];
 }
 
 #pragma mark - Public
@@ -248,8 +249,30 @@
         CGContextSetStrokeColorWithColor(context, self.strokeLineColor.CGColor);
         CGContextSetLineWidth(context, _strokeLineWidth);
         CGContextDrawPath(context, kCGPathFillStroke);
-        CGPathRelease(path);
         CGPathRelease(strokedArc);
+        
+        if (isSelectedEntry && notVoidValuesCount > 1) {
+            CGPathMoveToPoint(path, NULL, startX, startY);
+            
+            if (notVoidValuesCount > 1) {
+                CGPathAddArc(path, NULL, localCenter.x, localCenter.y, radius, localStartAngle, localEndAngle, YES);
+            } else {
+                CGPathAddEllipseInRect(path, NULL, CGRectMake(center.x - radius,
+                                                              center.y - radius,
+                                                              2 * radius, 2 * radius));
+                
+            }
+            CGPathRef selectedArc = CGPathCreateCopyByStrokingPath(path, NULL, _fillLineWidth, kCGLineCapButt, kCGLineJoinRound, 30);
+            
+            CGContextAddPath(context, selectedArc);
+            CGContextSetFillColorWithColor(context, self.selectedEntryColor.CGColor);
+            CGContextSetStrokeColorWithColor(context, self.strokeLineColor.CGColor);
+            CGContextSetLineWidth(context, _strokeLineWidth);
+            CGContextDrawPath(context, kCGPathFillStroke);
+            
+            CGPathRelease(selectedArc);
+        }
+        CGPathRelease(path);
         
         if (entry.detailsView) {
             CGPoint startPoint = CGPointMake(localCenter.x + radius * cos(localStartAngle), center.y + radius * sin(localStartAngle));

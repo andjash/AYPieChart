@@ -40,6 +40,7 @@ typedef NS_ENUM(NSUInteger, EntryViewPostion) {
 @property (nonatomic, assign) BOOL selectionEnabled;
 
 @property (nonatomic, retain) AYPieChartEntry *selectedChartEntry;
+@property (nonatomic, retain) UIColor *selectedEntryColor;
 @property (nonatomic, assign) CGFloat selectedChartValueIndent;
 @property (nonatomic, assign) CGFloat selectedChartValueAngleDelta; // in radians
 
