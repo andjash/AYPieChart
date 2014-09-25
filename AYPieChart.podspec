@@ -11,6 +11,6 @@ Pod::Spec.new do |s|
   s.requires_arc = false
 
   s.source_files = 'AYPieChart/*.{h,m}'
-  s.preserve_paths  = 'Demo'
+  s.preserve_paths  = 'Demo/*'
 
 end
