@@ -56,6 +56,8 @@
     self.selectedChartValueAngleDelta = 0.01;
     self.minSegmentAngle = -CGFLOAT_MAX;
     self.entryViewPostion = EntryViewPostionCenter;
+    self.minDrawDetailViewWith = 0;
+    self.showDetailForZeroEnabled = YES;
     self.selectedEntryColor = [UIColor colorWithWhite:1 alpha:0.15];
 }
 
@@ -146,6 +148,16 @@
     [self setNeedsDisplay];
 }
 
+-(void)setMinDrawDetailViewWith:(CGFloat)minDrawDetailViewWith {
+    _minDrawDetailViewWith = minDrawDetailViewWith;
+    [self setNeedsDisplay];
+}
+
+-(void)setShowDetailForZeroEnabled:(BOOL)showDetailForZeroEnabled {
+    _showDetailForZeroEnabled = showDetailForZeroEnabled;
+    [self setNeedsDisplay];
+}
+
 - (void)setFillLineWidth:(CGFloat)fillLineWidth {
     CGFloat width = self.frame.size.width;
     CGFloat height = self.frame.size.height;
@@ -184,12 +196,13 @@
     CGContextRef context = UIGraphicsGetCurrentContext();
     
     CGFloat summ = [self summFromPieValues:self.innerPieValues];
-    if (summ == 0) {
-        for (AYPieChartEntry *entry in self.innerPieValues) {
-            [entry.detailsView removeFromSuperview];
-        }
-        return;
-    }
+    //    if (summ == 0) {
+    //        for (AYPieChartEntry *entry in self.innerPieValues) {
+    //            [entry.detailsView removeFromSuperview];
+    //        }
+    //        return;
+    //    }
+    
     
     CGFloat startAngle = 0;
     if (_rotation > 0) {
@@ -210,9 +223,9 @@
     CGFloat avaliableCircleSpace = (2 * M_PI) - (radiansForSplit * notVoidValuesCount);
     
     for (AYPieChartEntry *entry in self.innerPieValues) {
-        if (entry.value == 0) {
-            continue;
-        }
+        //        if (entry.value == 0) {
+        //            continue;
+        //        }
         endAngle = -(fabs(startAngle) + (avaliableCircleSpace * entry.value / summ));
         CGMutablePathRef path = CGPathCreateMutable();
         
@@ -298,8 +311,12 @@
                 iconDiagonal = [self diagonalLenght:[entry.detailsView compressedViewSize]];
                 [entry.detailsView switchToCompressedView];
             }
+            BOOL showDetail = YES;
+            if (!self.showDetailForZeroEnabled) {
+                showDetail = (entry.value == 0)?NO:YES;
+            }
             
-            if (widthDistance > iconDiagonal && heightDistance > iconDiagonal) {
+            if (((widthDistance > iconDiagonal && heightDistance > iconDiagonal) || widthDistance > self.minDrawDetailViewWith) && showDetail) {
                 CGFloat distance = radius;
                 if (_entryViewPostion == EntryViewPostionCloseToSide){
                     distance = (radius + (_strokeLineWidth + _fillLineWidth) / 2) -
@@ -358,7 +375,6 @@
     }
     self.innerPieValues = result;
 }
-
 
 - (NSArray *)balanceArray:(NSArray *)target withMinValue:(CGFloat)minValue {
     NSMutableArray *neutralValues = [NSMutableArray array];
