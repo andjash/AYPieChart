@@ -196,13 +196,13 @@
     CGContextRef context = UIGraphicsGetCurrentContext();
     
     CGFloat summ = [self summFromPieValues:self.innerPieValues];
-    //    if (summ == 0) {
-    //        for (AYPieChartEntry *entry in self.innerPieValues) {
-    //            [entry.detailsView removeFromSuperview];
+    //        if (summ == 0) {
+    //            for (AYPieChartEntry *entry in self.innerPieValues) {
+    //                [entry.detailsView removeFromSuperview];
+    //            }
+    //            return;
     //        }
-    //        return;
-    //    }
-    
+    //
     
     CGFloat startAngle = 0;
     if (_rotation > 0) {
@@ -223,9 +223,9 @@
     CGFloat avaliableCircleSpace = (2 * M_PI) - (radiansForSplit * notVoidValuesCount);
     
     for (AYPieChartEntry *entry in self.innerPieValues) {
-        //        if (entry.value == 0) {
-        //            continue;
-        //        }
+        if (entry.value == 0) {
+            continue;
+        }
         endAngle = -(fabs(startAngle) + (avaliableCircleSpace * entry.value / summ));
         CGMutablePathRef path = CGPathCreateMutable();
         
