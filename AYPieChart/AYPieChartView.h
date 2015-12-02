@@ -43,7 +43,8 @@ typedef NS_ENUM(NSUInteger, EntryViewPostion) {
 @property (nonatomic, retain) UIColor *selectedEntryColor;
 @property (nonatomic, assign) CGFloat selectedChartValueIndent;
 @property (nonatomic, assign) CGFloat selectedChartValueAngleDelta; // in radians
-
+@property (nonatomic, assign) CGFloat minDrawDetailViewWith;
+@property (nonatomic, assign) BOOL showDetailForZeroEnabled;
 @property (nonatomic, assign) id<AYPieChartViewDelegate> delegate;
 
 - (CGFloat)angleInDegreesForPieChartEntry:(AYPieChartEntry *)entry;
