@@ -83,7 +83,7 @@
                 rotationStartTime = [self currentTimeInMilliseconds];
                 rotationSummary = 0;
             } else {
-                rotationSummary += fabsf(angleInDegrees);
+                rotationSummary += fabs(angleInDegrees);
                 self.velocityIsClockwise = angleInDegrees > 0;
             }
         }
