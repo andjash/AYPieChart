@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		55D480741D1956040035B5D2 /* AYPieChartUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D480731D1956040035B5D2 /* AYPieChartUtils.m */; };
 		CCBC5B43197FB51F0033126D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCBC5B42197FB51F0033126D /* Foundation.framework */; };
 		CCBC5B45197FB51F0033126D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCBC5B44197FB51F0033126D /* CoreGraphics.framework */; };
 		CCBC5B47197FB51F0033126D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCBC5B46197FB51F0033126D /* UIKit.framework */; };
@@ -45,6 +46,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		55D480721D1956040035B5D2 /* AYPieChartUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AYPieChartUtils.h; sourceTree = "<group>"; };
+		55D480731D1956040035B5D2 /* AYPieChartUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AYPieChartUtils.m; sourceTree = "<group>"; };
 		CCBC5B3F197FB51F0033126D /* AYPieChartDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AYPieChartDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CCBC5B42197FB51F0033126D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		CCBC5B44197FB51F0033126D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -187,6 +190,8 @@
 		CCBC5B8F197FB96C0033126D /* AYPieChart */ = {
 			isa = PBXGroup;
 			children = (
+				55D480721D1956040035B5D2 /* AYPieChartUtils.h */,
+				55D480731D1956040035B5D2 /* AYPieChartUtils.m */,
 				CCBC5B90197FB96C0033126D /* AYCompressibleView.h */,
 				CCBC5B91197FB96C0033126D /* AYPieChartEntry.h */,
 				CCBC5B92197FB96C0033126D /* AYPieChartEntry.m */,
@@ -325,6 +330,7 @@
 				CCBC5B99197FB96C0033126D /* AYRotationGestureRecognizer.m in Sources */,
 				CCBC5BA2197FBB3D0033126D /* AYPieChartEntryDetailsView.m in Sources */,
 				CCBC5B97197FB96C0033126D /* AYPieChartEntry.m in Sources */,
+				55D480741D1956040035B5D2 /* AYPieChartUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

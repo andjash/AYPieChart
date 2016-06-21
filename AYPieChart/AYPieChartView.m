@@ -81,7 +81,7 @@
     }
     notVoidValuesCount = notVoidValuesCount == 1 ? 0 : notVoidValuesCount;
     CGFloat avaliableCircleSpace = (2 * M_PI) - (radiansForSplit * notVoidValuesCount);
-    CGFloat summ = [self summFromPieValues:self.innerPieValues];
+    CGFloat summ = [AYPieChartUtils summFromPieValues:self.innerPieValues];
     
     for (AYPieChartEntry *entry in self.innerPieValues) {
         if (entry.value == 0) {
@@ -163,13 +163,13 @@
     }
     [_pieValues autorelease];
     _pieValues = [pieValues retain];
-    [self recreateInnerPieValues];
+    self.innerPieValues = [AYPieChartUtils createInnerPieValues:self.pieValues minSegmentAngle:self.minSegmentAngle];
     [self setNeedsDisplay];
 }
 
 - (void)setMinSegmentAngle:(CGFloat)minSegmentAngle {
     _minSegmentAngle = minSegmentAngle;
-    [self recreateInnerPieValues];
+    self.innerPieValues = [AYPieChartUtils createInnerPieValues:self.pieValues minSegmentAngle:self.minSegmentAngle];
     [self setNeedsDisplay];
 }
 
@@ -183,7 +183,7 @@
     radius -= ((_fillLineWidth + _strokeLineWidth) / 2) + _selectedChartValueIndent;
     CGContextRef context = UIGraphicsGetCurrentContext();
     
-    CGFloat summ = [self summFromPieValues:self.innerPieValues];
+    CGFloat summ = [AYPieChartUtils summFromPieValues:self.innerPieValues];
     if (summ == 0) {
         for (AYPieChartEntry *entry in self.innerPieValues) {
             [entry.detailsView removeFromSuperview];
@@ -277,7 +277,7 @@
         if (entry.detailsView) {
             CGPoint startPoint = CGPointMake(localCenter.x + radius * cos(localStartAngle), center.y + radius * sin(localStartAngle));
             CGPoint endPoint = CGPointMake(localCenter.x + radius * cos(localEndAngle), center.y + radius * sin(localEndAngle));
-            CGFloat widthDistance = [self distanceBetween:startPoint and:endPoint];
+            CGFloat widthDistance = [AYPieChartUtils distanceBetween:startPoint and:endPoint];
             if (fabs(localEndAngle - localStartAngle) > M_PI_2) {
                 widthDistance = CGFLOAT_MAX;
             }
@@ -287,15 +287,15 @@
                                      localCenter.y + (radius - (_fillLineWidth - _strokeLineWidth) / 2) * sin(middleAngle));
             endPoint = CGPointMake(localCenter.x + (radius + (_fillLineWidth + _strokeLineWidth) / 2) * cos(middleAngle),
                                    localCenter.y + (radius + (_fillLineWidth + _strokeLineWidth) / 2) * sin(middleAngle));
-            CGFloat heightDistance = [self distanceBetween:startPoint and:endPoint];
+            CGFloat heightDistance = [AYPieChartUtils distanceBetween:startPoint and:endPoint];
             
             CGSize fullSize = [entry.detailsView fullViewSize];
-            CGFloat iconDiagonal = [self diagonalLenght:fullSize];
+            CGFloat iconDiagonal = [AYPieChartUtils diagonalLenght:fullSize];
             
             if (widthDistance > iconDiagonal && heightDistance > iconDiagonal) {
                 [entry.detailsView switchToFullView];
             } else {
-                iconDiagonal = [self diagonalLenght:[entry.detailsView compressedViewSize]];
+                iconDiagonal = [AYPieChartUtils diagonalLenght:[entry.detailsView compressedViewSize]];
                 [entry.detailsView switchToCompressedView];
             }
             
@@ -303,7 +303,7 @@
                 CGFloat distance = radius;
                 if (_entryViewPostion == EntryViewPostionCloseToSide){
                     distance = (radius + (_strokeLineWidth + _fillLineWidth) / 2) -
-                    ([self diagonalLenght:entry.detailsView.frame.size] / 2);
+                    ([AYPieChartUtils diagonalLenght:entry.detailsView.frame.size] / 2);
                 }
                 CGFloat imageX = localCenter.x + distance * cos(middleAngle);
                 CGFloat imageY = localCenter.y + distance * sin(middleAngle);
@@ -336,105 +336,6 @@
 
 #pragma mark - Private
 
-- (void)recreateInnerPieValues {
-    if (_minSegmentAngle < 0 || _minSegmentAngle > 2 * M_PI) {
-        self.innerPieValues = self.pieValues;
-        return;
-    }
-    NSMutableArray *initialValues = [NSMutableArray arrayWithCapacity:[self.pieValues count]];
-    CGFloat summ = 0;
-    for (AYPieChartEntry *entry in self.pieValues) {
-        [initialValues addObject:@(entry.value)];
-        summ += entry.value;
-    }
-    CGFloat minValue = (self.minSegmentAngle / (2 * M_PI)) * summ;
-    NSArray *balancedValues = [self balanceArray:initialValues withMinValue:minValue];
-    NSMutableArray *result = [NSMutableArray arrayWithCapacity:[self.pieValues count]];
-    for (int i = 0 ; i < [self.pieValues count]; i++) {
-        AYPieChartEntry *newEntry = [AYPieChartEntry entryWithValue:[balancedValues[i] floatValue]
-                                                              color:[self.pieValues[i] color]
-                                                        detailsView:[self.pieValues[i] detailsView]];
-        [result addObject:newEntry];
-    }
-    self.innerPieValues = result;
-}
-
-
-- (NSArray *)balanceArray:(NSArray *)target withMinValue:(CGFloat)minValue {
-    NSMutableArray *neutralValues = [NSMutableArray array];
-    NSMutableArray *valuesToDecrease = [NSMutableArray array];
-    NSMutableArray *result = [NSMutableArray arrayWithArray:target];
-    CGFloat balanceValue = 0;
-    
-    for (int i = 0; i < [target count]; i++) {
-        NSNumber *number = target[i];
-        CGFloat floatValue = [number floatValue];
-        
-        if (floatValue == minValue) {
-            [neutralValues addObject:@[@(minValue), @(i)]];
-            continue;
-        }
-        
-        if (floatValue < minValue) {
-            [neutralValues addObject:@[@(minValue), @(i)]];
-            balanceValue += minValue + floatValue;
-            continue;
-        }
-        
-        [valuesToDecrease addObject:@[number, @(i)]];
-    }
-    
-    NSArray *decreasedValues = [self decreaseValue:balanceValue
-                                         fromArray:valuesToDecrease
-                                          minValue:minValue];
-    
-    for (NSArray *values in decreasedValues) {
-        [result replaceObjectAtIndex:[values[1] unsignedIntegerValue] withObject:values[0]];
-    }
-    for (NSArray *values in neutralValues) {
-        [result replaceObjectAtIndex:[values[1] unsignedIntegerValue] withObject:values[0]];
-    }
-    
-    return result;
-}
-
-- (NSArray *)decreaseValue:(CGFloat)balanceValue fromArray:(NSArray *)target minValue:(CGFloat)min {
-    NSMutableArray *result = [NSMutableArray array];
-    CGFloat targetArraySumm = 0;
-    for (NSArray *value in target) {
-        targetArraySumm += [value[0] floatValue];
-    }
-    
-    CGFloat difRes = 0;
-    for (NSArray *value in target) {
-        CGFloat floatValue = [value[0] floatValue];
-        
-        CGFloat newValue = MAX(min, floatValue - ((floatValue / targetArraySumm) * balanceValue));
-        difRes += floatValue - newValue;
-        [result addObject:@[@(newValue), value[1]]];
-    }
-    return result;
-}
-
-- (CGFloat)summFromPieValues:(NSArray *)pieValues {
-    CGFloat result = 0;
-    for (AYPieChartEntry *entry in pieValues) {
-        result += entry.value;
-    }
-    return result;
-}
-
-- (CGFloat)diagonalLenght:(CGSize)size {
-    CGFloat diagonalSquare = size.width * size.width + size.height * size.height;
-    return sqrtf(diagonalSquare);
-}
-
-- (CGFloat)distanceBetween:(CGPoint)first and:(CGPoint)second {
-    CGFloat xDist = (second.x - first.x);
-    CGFloat yDist = (second.y - first.y);
-    return sqrt((xDist * xDist) + (yDist * yDist));
-}
-
 - (CGFloat)angleBetweenFirstPoint:(CGPoint)first
                       secondPoint:(CGPoint)secondPoint
                            center:(CGPoint)center {
@@ -453,7 +354,7 @@
 }
 
 - (void)tapRecognized:(UITapGestureRecognizer *)gesture {
-    CGFloat summ = [self summFromPieValues:self.innerPieValues];
+    CGFloat summ = [AYPieChartUtils summFromPieValues:self.innerPieValues];
     if (summ == 0) {
         return;
     }
@@ -464,7 +365,7 @@
     CGPoint center = {width / 2, height / 2};
     CGFloat radius = width > height ? center.y : center.x;
     
-    if ([self distanceBetween:currentTouchPoint and:center] > radius) {
+    if ([AYPieChartUtils distanceBetween:currentTouchPoint and:center] > radius) {
         self.selectedChartEntry = nil;
         [self setNeedsDisplay];
         return;

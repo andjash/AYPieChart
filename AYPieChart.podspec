@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "AYPieChart"
-  s.version          = "1.3.1"
+  s.version          = "1.4.0"
   s.summary          = "Simple and configurable pie chart."
   s.license          = 'MIT'
   s.homepage         = 'https://github.com/andjash/AYPieChart'

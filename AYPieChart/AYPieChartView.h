@@ -7,11 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-typedef NS_ENUM(NSUInteger, EntryViewPostion) {
-    EntryViewPostionCenter,
-    EntryViewPostionCloseToSide,
-};
+#import "AYPieChartUtils.h"
 
 @class AYPieChartView;
 @class AYPieChartEntry;
